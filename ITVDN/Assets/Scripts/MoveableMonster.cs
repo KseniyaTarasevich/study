@@ -7,13 +7,11 @@ public class MoveableMonster : Monster
 {
     [SerializeField] private float _speed = 2f;
 
-    private Bullet bullet;
     private SpriteRenderer sprite;
     private Vector3 direction;
     protected override void Awake()
     {
         sprite = GetComponentInChildren<SpriteRenderer>();
-        bullet = Resources.Load<Bullet>("Bullet");
     }
 
     protected override void Start()
@@ -44,7 +42,7 @@ public class MoveableMonster : Monster
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + transform.up * 0.5f + transform.right * direction.x * 0.5f, 0.1f);
 
-        if (colliders.Length > 0 && colliders.All(x => !x.GetComponent<Character>())) 
+        if (colliders.Length > 0 && colliders.All(x => !x.GetComponent<Character>()))
         {
             direction *= -1f;
         }

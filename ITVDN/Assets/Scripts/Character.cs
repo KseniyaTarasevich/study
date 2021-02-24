@@ -16,6 +16,22 @@ public class Character : Unit
 
     private Bullet bullet;
 
+    public int Lives
+    {
+        get
+        {
+            return _livesNumber;
+        }
+
+        set
+        {
+            if (value < 5) _livesNumber = value;
+            livesBar.Refresh();
+        }
+    }
+
+   private LivesBar livesBar;
+
     private CharacterState State
     {
         get
@@ -31,6 +47,9 @@ public class Character : Unit
 
     private void Awake()
     {
+
+        livesBar = FindObjectOfType<LivesBar>();
+
         controller = GetComponent<CharacterController>();
 
 
@@ -75,10 +94,6 @@ public class Character : Unit
         {
             Jump();
         }
-
-
-
-
     }
 
     private void Run()
@@ -113,11 +128,11 @@ public class Character : Unit
 
     public override void ReceiveDamage()
     {
-        _livesNumber--;
+        Lives--;
         rigidbody.velocity = Vector3.zero;
         rigidbody.AddForce(transform.up * 8f, ForceMode2D.Impulse);
 
-       
+
 
         Debug.Log(_livesNumber);
     }
@@ -136,14 +151,14 @@ public class Character : Unit
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        //Unit unit = collider.gameObject.GetComponent<Unit>();
+        Bullet bullet = collider.gameObject.GetComponent<Bullet>();
 
-        //if(unit)
-        //{
-        //    ReceiveDamage();
-        //}
+        if (bullet && bullet.Parent != gameObject)
+        {
+            ReceiveDamage();
+        }
 
-    
+
     }
 }
 

@@ -12,10 +12,23 @@ public class Bullet : MonoBehaviour
         {
             parent = value;
         }
+
+        get
+        {
+            return parent;
+        }
+    }
+
+    public Color Color
+    {
+        set
+        {
+            sprite.color = value;
+        }
     }
 
     [SerializeField] private float _speed;
-    
+
 
     private void Start()
     {
@@ -46,12 +59,12 @@ public class Bullet : MonoBehaviour
     {
         Unit unit = collider.GetComponent<Unit>();
 
-        if (unit && unit.gameObject != parent)
+        if (unit && unit.gameObject != parent && unit)
         {
             Destroy(gameObject);
         }
     }
 
-    
+
 }
 
